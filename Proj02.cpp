@@ -16,40 +16,27 @@ using std::endl; //New line character
 
 
 long gcd(long lowerLim, long upperLim){
-	//Calculates the greatest common demonimator of two numbers
-	int i;
-	int gcd = 1;
-	//Loop through every number from 1 to the lower limit
-	for(i = 1; i < lowerLim + 1; i++){
-		//If both numbers are divisible by i, make it the GCD
-		if(lowerLim%i == 0 && upperLim%i == 0){
-			gcd = i;
-		}
-	}
-	//Returns the greatest common demonimator
-	return gcd;
+	if (upperLim == 0)  
+		return lowerLim;  
+  	return gcd(upperLim, lowerLim % upperLim);  
 }
 
 long phi(long totativeUpper){
 	long lower;
 	long totative = 0;
-	long i;
-	long gcd = 0;
+	//long i;
+	long gcdNum = 0;
 	//Loops through every number from 1 to the number given by the user
 	for(lower = 1; lower < totativeUpper; lower++){
 		//Checks to see if the number is a relative prime
-		for(i = 1; i < lower + 1; i++){
-			if(lower%i == 0 && totativeUpper%i == 0){
-				gcd = i;
-			}
-		}
+		gcdNum = gcd(lower,totativeUpper);
 		//if the number is a relative prime, output it and increase the counter
-		if(gcd == 1){
+		if(gcdNum == 1){
 			cout << lower << " ";
 			totative += 1;
 		}
 	}
-	//
+	//returns the totative
 	return totative;
 }
 
@@ -84,4 +71,3 @@ int main(){
 		cout << endl << totative << endl;
 	}
 }
-
