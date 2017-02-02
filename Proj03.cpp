@@ -18,36 +18,50 @@ using std::cout; using std::cin; using std::endl;
 using std::boolalpha;
 
 bool is_prime(long n){
+    //Checks every number between 2 and n
     for(long i = 2; i < n; i++){
+        //If n is divisible by a number other than 1, it is not prime.
         if (n%i == 0)
             return false;
     }
+    //If it didn't return false, it is prime, so returns true
     return true;
 }
 
 bool is_powerful(long n){
+    //Checks every number between 2 and n
     for(long i = 2; i < n; i++){
+        //Checks to see if i is a prime number, and if n is divisible by i
         if(is_prime(i) && (n%i == 0)){
+            //If n is not divisible by i squared, return false
             if (n%(i*i) != 0)
                 return false;
         }
     }
+    //Must be powerful number, return true
     return true;
 }
 
 bool is_perfect_power(long n){
+    //Loops through every number from 2 to the square root of n
+    //Can stop at sqrt n, because then m**2 = n, and m**(>2) > n
     for(long m = 2; m < sqrt(n) + 1; m++){
+        //Loops through every possible number
         for(long k = 2; k < n; k++){
             if (pow(m,k) == n)
+                //Returns true if there is a number where m**k = n
                 return true;
             else if(pow(m,k) > n)
+                //moves on to the next m if the number created is greater than n
                 break;
         }
     }
+    //Returns false if there is not a power k of m (m**k) that equals n
     return false;
 }
 
 bool is_achilles(long n){
+    //Checks to see if number is power and is not a perfect power
     if(is_powerful(n) && (!is_perfect_power(n)))
         return true;
     else
