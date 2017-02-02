@@ -2,9 +2,6 @@
 #include<math.h>
 using std::cout; using std::cin; using std::endl;
 using std::boolalpha;
-// add any other includes you like.
-
-// functions go here
 
 bool is_prime(long n){
     for(long i = 2; i < n; i++){
