@@ -13,7 +13,7 @@
 
 
 #include<iostream>
-#include<math.h>
+#include<math.h> //Using pow() from this
 using std::cout; using std::cin; using std::endl;
 using std::boolalpha;
 
