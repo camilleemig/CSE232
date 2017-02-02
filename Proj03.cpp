@@ -1,3 +1,17 @@
+/*************************************
+* Project 3
+* Camille Emig
+* Section 003
+* 02-02-2017
+*
+* Switch function decides which function to call
+*   1) Check if number is prime
+*   2) Check if number is powerful
+*   3) Check if number is perfect power
+*   4) Check if number is achilles
+**************************************/
+
+
 #include<iostream>
 #include<math.h>
 using std::cout; using std::cin; using std::endl;
