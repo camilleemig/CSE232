@@ -1,3 +1,25 @@
+/*************************************
+* Project 4
+* Camille Emig
+* Section 003
+* 02-06-2017
+*
+* Switch function decides which function to call
+*   1) Check if number is prime
+*   2) Check if number is semiprime
+*       check if number is only divisible by two prime numbers
+*   3) Reverse number
+*       convert to a string, then reverse string, convert to long
+*   4) Check if number is palindrome
+*       see if reverse of number is equal to the original number
+*   5) Check to see if number is emirp
+*       number must not be a palindrome
+*       number and reverse of number must be prime
+*   6) Check to see if number is emirpimes
+*       number must not be a palindrome
+*       number and reverse of number must be semiprime
+**************************************/
+
 #include<iostream>
 using std::cout; using std::cin; using std::endl;
 using std::boolalpha;
