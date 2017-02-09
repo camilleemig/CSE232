@@ -31,7 +31,7 @@ using std::string; using std::stol; using std::to_string;
 
 bool is_prime(long n){
     //Checks every number between 2 and n
-    for(long i = 2; i < n; i++){
+    for(long i = 2; i < sqrt(n); i++){
         //If n is divisible by a number other than 1, it is not prime.
         if (n%i == 0)
             return false;
