@@ -47,7 +47,7 @@ bool is_semiprime(long n){
     for(long i = 2; i < n; i++){
         if(n%i == 0){ //Check to see if the number is divisible
             if(is_prime(i)){ //Check to see if the number is prime
-                if(i*i == n){   //Count a factor twice if it is a square root of the number
+                if(n%(i*i) == 0){   //Count a factor twice if factor is a root
                     prime_count += 1;
                 }
                 prime_count += 1;
