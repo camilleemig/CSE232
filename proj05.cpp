@@ -1,3 +1,16 @@
+/*************************************
+* Project 5
+* Camille Emig
+* Section 003
+* 02-20-2017
+*
+* Switch function decides which function to call
+* 	1) Convert to lower case, remove non-letters
+*	2) Encode one character
+*	3) Encode a string
+*	4) Decode a character
+*	5) Decode a string
+**************************************/
 #include<iostream>
 using std::cout; using std::cin; using std::endl; using std::boolalpha;
 #include<string>
@@ -14,32 +27,30 @@ using std::transform;
 string lower_and_strip(string s){
 	string return_string = "";
 	for(char c : s){
-
-		if((c<='Z') && (c >='A')){
-			return_string += c-('Z'-'z');
+		if((c<='Z') && (c >='A')){ //If it is an upper case letter
+			return_string += c-('Z'-'z'); //add the lower case letter
 		}
-		// || (c == ' ')
-		else if ((c<='z' && c >='a')){
+		else if ((c<='z' && c >='a')){ //add the lower case letters
 			return_string += c;
 		}
 	}
-	return return_string;
+	return return_string; //Returns lower case stripped string
 }
 int return_encoded_char(string key, string::size_type &start, char C){
 	int return_val = 0;
 	string::size_type new_pos = 0;
-	new_pos = key.find(C, start);
-	if(new_pos != string::npos){
+	new_pos = key.find(C, start); //Tries to find the character in the key
+	if(new_pos != string::npos){ //If the character was found
 		return_val = new_pos - start;
 		start = new_pos;
 	}
-	else{
-		new_pos = key.find(C);
-		if(new_pos != string::npos){
+	else{ //Character was not found
+		new_pos = key.find(C); //Try to find it in the beginning of the string
+		if(new_pos != string::npos){ //If it was found
 			return_val = new_pos + (key.length() - start);
 			start = new_pos;
 		}
-		else{
+		else{ //If it wasn't found, it is not in key
 			return_val = key.size() + 1;
 			start = 0;
 		}
@@ -50,8 +61,9 @@ int return_encoded_char(string key, string::size_type &start, char C){
 string encode(string message, string key){
 	string::size_type start = 0;
 	string return_string = "";
-	message = lower_and_strip(message);
+	message = lower_and_strip(message); //strips and converts message to lower case
 	for(char c : message){
+		//Convert message one character at a time
 		return_string += std::to_string(return_encoded_char(key, start, c)) + " ";
 	}
 	return return_string;
@@ -59,7 +71,7 @@ string encode(string message, string key){
 
 char return_decoded_char(string key,string::size_type &start, int num){
 	char return_char = '_';
-	if(num < key.size() + 1){
+	if(num < key.size() + 1){ //
 		return_char = key[(start + num)%key.size()];
 		start = (start + num)%key.size();
 	}
