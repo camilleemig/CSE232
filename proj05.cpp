@@ -72,8 +72,8 @@ string encode(string message, string key){
 char return_decoded_char(string key,string::size_type &start, int num){
 	char return_char = '_';
 	if(num != (key.size() + 1)){ //If character is not a space
-		return_char = key[(start + num)%key.size()];
-		start = (start + num)%key.size();
+		return_char = key[(start + num)%key.size()]; //get character to return
+		start = (start + num)%key.size(); //update the start
 	}
 	else{
 		return_char = '_';
@@ -173,5 +173,3 @@ int main (){
   } // of switch
 
 } // of main
-  
-  
