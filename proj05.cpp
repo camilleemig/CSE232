@@ -71,7 +71,7 @@ string encode(string message, string key){
 
 char return_decoded_char(string key,string::size_type &start, int num){
 	char return_char = '_';
-	if(num < key.size() + 1){ //
+	if(num != (key.size() + 1)){ //
 		return_char = key[(start + num)%key.size()];
 		start = (start + num)%key.size();
 	}
