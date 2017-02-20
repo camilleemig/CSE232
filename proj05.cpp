@@ -9,7 +9,7 @@ using std::distance; using std::back_inserter;
 #include<algorithm>
 using std::transform;
 #include<cctype>
-// whatever headers you need
+
 
 string lower_and_strip(string s){
 	string return_string = "";
@@ -27,26 +27,22 @@ string lower_and_strip(string s){
 }
 int return_encoded_char(string key, string::size_type &start, char C){
 	int return_val = 0;
-	bool found = false;
-	for(int i = start; i < key.length(); i++){
-		if(key[i] == C){
-			found = true;
-			return_val = i - start;
-			start = i;
-		}
+	string::size_type new_pos = 0;
+	new_pos = key.find(C, start);
+	if(new_pos != string::npos){
+		return_val = new_pos - start;
+		start = new_pos;
 	}
-	if(found == false){
-		for(int i = 0; i < start; i ++){
-			if(key[i] == C){
-				found = true;
-				return_val = i + (key.length() - start);
-				start = i;
-			}
+	else{
+		new_pos = key.find(C);
+		if(new_pos != string::npos){
+			return_val = new_pos + (key.length() - start);
+			start = new_pos;
 		}
-	}
-	if(found == false){
-		return_val = key.size() + 1;
-		start = 0;
+		else{
+			return_val = key.size() + 1;
+			start = 0;
+		}
 	}
 	return return_val;
 }
@@ -69,8 +65,6 @@ char return_decoded_char(string key,string::size_type &start, int num){
 	}
 	else{
 		return_char = '_';
-		cout << (start + num)%key.size() << endl;
-		//start = 0;
 	}
 	return return_char;
 }
@@ -165,3 +159,5 @@ int main (){
   } // of switch
 
 } // of main
+  
+  
