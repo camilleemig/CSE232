@@ -71,7 +71,7 @@ string encode(string message, string key){
 
 char return_decoded_char(string key,string::size_type &start, int num){
 	char return_char = '_';
-	if(num != (key.size() + 1)){ //
+	if(num != (key.size() + 1)){ //If character is not a space
 		return_char = key[(start + num)%key.size()];
 		start = (start + num)%key.size();
 	}
@@ -96,10 +96,12 @@ string decode(string encoded_text, string key){
 		else{
 			//Adds together the two integers to make one int to decode
 			integer_c = stoi(string(1,encoded_text[i]))*10 + stoi(string(1,encoded_text[i+1]));
-			i += 2;
+			//Decodes character
 			return_string += return_decoded_char(key, start, integer_c);
+			//Skips the space
+			i += 2;
 		}
-	}
+	}//end for
 	return return_string;
 }
 
