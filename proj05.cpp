@@ -86,22 +86,11 @@ string decode(string encoded_text, string key){
 	string return_string = "";
 	string c;
 	int integer_c;
-	for(int i = 0; i < encoded_text.size(); ++i){
-		if(encoded_text[i + 1] == ' '){
-			c = encoded_text[i];
-			++i;
-			integer_c = stoi(c);
-			return_string += return_decoded_char(key, start, integer_c);
-		}
-		else{
-			//Adds together the two integers to make one int to decode
-			integer_c = stoi(string(1,encoded_text[i]))*10 + stoi(string(1,encoded_text[i+1]));
-			//Decodes character
-			return_string += return_decoded_char(key, start, integer_c);
-			//Skips the space
-			i += 2;
-		}
-	}//end for
+	istringstream iss (encoded_text);
+	while(!iss.eof()){
+		getline(iss,integer_c);
+		return_string += return_decoded_char(key, start, integer_c);
+	}
 	return return_string;
 }
 
