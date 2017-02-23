@@ -82,15 +82,15 @@ char return_decoded_char(string key,string::size_type &start, int num){
 }
 
 string decode(string encoded_text, string key){
-	string::size_type start = 0;
-	string return_string = "";
+	string::size_type start = 0; //Set the original start value
+	string return_string = ""; //Initialize the retrun string
 	string c;
 	int integer_c;
-	istringstream iss (encoded_text);
+	istringstream iss (encoded_text); //Make a stream of the text to decode
 	while(!iss.eof()){
-		std::getline(iss,c, ' ');
-		integer_c = stoi(c);
-		return_string += return_decoded_char(key, start, integer_c);
+		std::getline(iss,c, ' '); //Get the next number into c, up to a space
+		integer_c = stoi(c); //Convert c to an integer
+		return_string += return_decoded_char(key, start, integer_c); //Decode the letter
 	}
 	return return_string;
 }
