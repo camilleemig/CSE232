@@ -88,7 +88,8 @@ string decode(string encoded_text, string key){
 	int integer_c;
 	istringstream iss (encoded_text);
 	while(!iss.eof()){
-		getline(iss,integer_c);
+		std::getline(iss,c, ' ');
+		integer_c = stoi(c);
 		return_string += return_decoded_char(key, start, integer_c);
 	}
 	return return_string;
