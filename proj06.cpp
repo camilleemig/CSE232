@@ -30,5 +30,53 @@ void printImage(vector<vector<int>> image){
 }
 
 int countHoles(vector<vector<int>> image){
-	return 0;
+	long e_count = 0;
+	long i_count = 0;
+	long zero_count = 0;
+	long one_count = 0;
+	long rows = image.size();
+	long columns = image.at(0).size();
+	for(int i = 0; i < rows -1; i++){
+		for(int j = 0; j < columns - 1; j++){
+			zero_count = 0;
+			one_count = 0;
+			
+			//Count the number of 1's and 0's
+			if(image[i][j] == 0){
+				zero_count += 1;
+			}
+			else{
+				one_count += 1;
+			}
+			if(image[i+1][j] == 0){
+				zero_count += 1;
+			}
+			else{
+				one_count += 1;
+			}
+			if(image[i][j+1] == 0){
+				zero_count += 1;
+			}
+			else{
+				one_count += 1;
+			}
+			if(image[i+1][j+1] == 0){
+				zero_count += 1;
+			}
+			else{
+				one_count += 1;
+			}
+			
+			//Check if it is a corner
+			if(zero_count == 3){
+				i_count += 1;
+			}
+			else if(one_count == 3){
+				e_count += 1;
+			}
+		}
+
+		
+    }
+    return (int)((e_count - i_count)/4);
 }
