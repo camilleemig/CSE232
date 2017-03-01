@@ -1,3 +1,13 @@
+/*************************************
+* Project 6
+* Camille Emig
+* Section 003
+* 02-28-2017
+*
+* Function to read in image from file
+* Function to print out image
+* Function to count the number of holes
+**************************************/
 #include<vector>
 using std::vector;
 #include<iostream>
