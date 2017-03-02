@@ -32,14 +32,12 @@ vector<vector<int>> readImage(int columns, int rows){
 }
 
 void printImage(vector<vector<int>> image){
+
 	//Loops through each vector in the image
 	for(vector<int> vec : image){
 		//Loops through each number in the vector
-		for(int num : vec){
-			//Prints the number
-			cout<<num;
-		}
-		//Prints the new line to start a new row
+		ostream_iterator out<int>(cout,"");
+		copy(v.begin(), v.end(), out);
 		cout << endl;
 	}
 }
