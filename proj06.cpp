@@ -21,8 +21,8 @@ using std::copy;
 
 
 vector<vector<int>> readImage(int columns, int rows){
-    vector<int> rows_vec(columns, 0); //Vector to use as the row for the image
-    vector<vector<int>> image(rows, rows_vec); //Creates a template of the image
+	//Creates a template of the image
+    vector<vector<int>> image(rows, vector<int> rows_vec(columns, 0));
     for(int i = 0; i < rows; i++){
         for(int j = 0; j < columns; j++){
             cin >> image[i][j]; //Get the next number into c, up to a space
@@ -35,7 +35,7 @@ void printImage(vector<vector<int>> image){
     //Loops through each vector in the image
     for(vector<int> vec : image){
         //Loops through each number in the vector
-        copy(vec.begin(), vec.end(), ostream_iterator<int>(cout,""));
+        copy(vec.begin(), vec.end(), ostream_iterator<int>(cout));
         cout << endl;
     }
 }
