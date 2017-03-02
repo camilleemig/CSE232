@@ -12,6 +12,10 @@
 using std::vector;
 #include<iostream>
 using std::cin; using std::cout; using std::endl;
+#include<iterator>
+using std::ostream_iterator;
+#include <algorithm>
+using std::copy;
 #include<string>
 using std::string; using std::stol; using std::to_string;
 
@@ -36,8 +40,7 @@ void printImage(vector<vector<int>> image){
 	//Loops through each vector in the image
 	for(vector<int> vec : image){
 		//Loops through each number in the vector
-		ostream_iterator out<int>(cout,"");
-		copy(v.begin(), v.end(), out);
+		copy(vec.begin(), vec.end(), ostream_iterator<int>(cout,""));
 		cout << endl;
 	}
 }
