@@ -23,14 +23,9 @@ using std::copy;
 vector<vector<int>> readImage(int columns, int rows){
     vector<int> rows_vec(columns, 0); //Vector to use as the row for the image
     vector<vector<int>> image(rows, rows_vec); //Creates a template of the image
-    //Used for converting from cin to a long
-    string str_num = "";
-    long long_num = 0;
     for(int i = 0; i < rows; i++){
         for(int j = 0; j < columns; j++){
-            cin >> str_num; //Get the next number into c, up to a space
-            long_num = stol(str_num); //Convert c to an integer
-            image[i][j] = long_num; //Adds the number into the image
+            cin >> image[i][j]; //Get the next number into c, up to a space
         }
     }
     return image;
@@ -49,14 +44,12 @@ int countHoles(vector<vector<int>> image){
     long e_count = 0; //Counts the total amount of external corners
     long i_count = 0; //Counts the total amount of internal corners
     long count = 0; //Counts the amount of zeros in a two-by-two area
-    long rows = image.size(); //Figures out the amount of rows in the image
-    long columns = image.at(0).size(); //Figures out the amount of columns in the image
-    //Loops through each row
-    for(int i = 0; i < rows -1; i++){
-        //Loops through each column
-        for(int j = 0; j < columns - 1; j++){
+    //Loops through each row - minus one for the last row
+    for(int i = 0; i < (image.size() -1); i++){
+        //Loops through each column - minus one for the last column
+        for(int j = 0; j < (image.at(0).size() - 1); j++){
             count = 0;  //Resets the counts.
-            //Zeros are 2s, Ones are Ones
+            //Zeros are 2s, Ones are 1s
             //Count the number of 1's and 0's
             count += (image[i][j] == 0) ? 2 : 1;
             count += (image[i+1][j] == 0) ? 2 : 1;
@@ -64,10 +57,10 @@ int countHoles(vector<vector<int>> image){
             count += (image[i+1][j+1] == 0) ? 2 : 1;
 
             //Check if it is a corner
-            if(count == 7){ //Internal corner
+            if(count == 7){ //Internal corner (2 + 2 + 2 + 1)
                 i_count += 1;
             }
-            else if(count == 5){ //External corner
+            else if(count == 5){ //External corner (1 + 1 + 1 + 2)
                 e_count += 1;
             }
         }
