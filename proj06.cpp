@@ -21,7 +21,7 @@ using std::copy;
 
 
 vector<vector<int>> readImage(int columns, int rows){
-	//Creates a template of the image
+    //Creates a template of the image
     vector<vector<int>> image(rows, vector<int> rows_vec(columns, 0));
     for(int i = 0; i < rows; i++){
         for(int j = 0; j < columns; j++){
@@ -41,16 +41,13 @@ void printImage(vector<vector<int>> image){
 }
 
 int countHoles(vector<vector<int>> image){
-    long e_count = 0; //Counts the total amount of external corners
-    long i_count = 0; //Counts the total amount of internal corners
-    long count = 0; //Counts the amount of zeros in a two-by-two area
+    long e_count = 0, i_count = 0 ,count = 0; //Counts the amount of zeros in a two-by-two area
     //Loops through each row - minus one for the last row
     for(int i = 0; i < (image.size() -1); i++){
         //Loops through each column - minus one for the last column
         for(int j = 0; j < (image.at(0).size() - 1); j++){
             count = 0;  //Resets the counts.
-            //Zeros are 2s, Ones are 1s
-            //Count the number of 1's and 0's
+            //Count the number of 1's and 0's, Zeros are 2s, Ones are 1s
             count += (image[i][j] == 0) ? 2 : 1;
             count += (image[i+1][j] == 0) ? 2 : 1;
             count += (image[i][j+1] == 0) ? 2 : 1;
