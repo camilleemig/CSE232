@@ -115,15 +115,18 @@ vector<pair<string, long>> top_n(map<string, long> &m, int num){
 
 double ochiai(map<string, long> &m1, map<string, long> &m2){
 	//THIS DOESN'T WORK
-	vector<pair<string, long> > v(m1.size()); 
-	vector<pair<string, long> >::iterator it;
-	top_n(m1, m1.size()); //sort m1
-	top_n(m2,m2.size()); //sort m2
-	it = set_intersection(m1.begin(), m1.end(), m2.begin(), m2.end(), v.begin());
-	v.resize(it-v.begin());
+	vector<pair<string, long> > vR(m1.size()); 
+	vector<pair<string, long> > v1(m1.size()); 
+	vector<pair<string, long> > v2(m1.size()); 
 
-	cout << "The intersection has " << (v.size()) << " elements\n";
-	return ((v.size())/(sqrt(m1.size() * m2.size()))); //N(A intersection B)/sqrt(A * B)
+	vector<pair<string, long> >::iterator it;
+	v1 = top_n(m1, m1.size()); //sort m1
+	v2 = top_n(m2,m2.size()); //sort m2
+	it = set_intersection(v1.begin(), v1.end(), v2.begin(), v2.end(), vR.begin());
+	vR.resize(it-vR.begin());
+
+	cout << "The intersection has " << (vR.size()) << " elements\n";
+	return ((vR.size())/(sqrt(v1.size() * v2.size()))); //N(A intersection B)/sqrt(A * B)
 }
 
 double ochiai2(map<string, long> &m1, map<string, long> &m2, int num){
