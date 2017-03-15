@@ -114,21 +114,23 @@ vector<pair<string, long>> top_n(map<string, long> &m, int num){
 }
 
 double ochiai(map<string, long> &m1, map<string, long> &m2){
-	//THIS DOESN'T WORK
-	vector<pair<string, long> > vR(m1.size()); 
-	vector<pair<string, long> > v1(m1.size()); 
-	vector<pair<string, long> > v2(m1.size()); 
-
+	vector<pair<string, long> > vR;
+	vector<pair<string, long> > v1;
+	vector<pair<string, long> > v2;
 	vector<pair<string, long> >::iterator it;
-	v1 = top_n(m1, m1.size()); //sort m1
-	v2 = top_n(m2,m2.size()); //sort m2
-	it = set_intersection(v1.begin(), v1.end(), v2.begin(), v2.end(), vR.begin());
-	vR.resize(it-vR.begin());
-
-	cout << "The intersection has " << (vR.size()) << " elements\n";
-	return ((vR.size())/(sqrt(v1.size() * v2.size()))); //N(A intersection B)/sqrt(A * B)
+	
+	copy(m1.begin(), m1.end(), back_inserter(v1)); //Copy each element in the map to the vector
+    	sort(v1.begin(), v1.end(), pair_string_lessthan); //Sort the vector
+    	copy(m2.begin(), m2.end(), back_inserter(v2)); //Copy each element in the map to the vector
+    	sort(v2.begin(), v2.end(), pair_string_lessthan); //Sort the vector
+    
+	set_intersection(v1.begin(), v1.end(),v2.begin(), v2.end(), back_inserter(vR), pair_string_lessthan);
+	double intersection_num = vR.size();
+	double map1_size = v1.size();
+	double map2_size = v2.size();
+	return (intersection_num)/(sqrt(map1_size*map2_size)); //N(A intersection B)/sqrt(A * B)
 }
 
 double ochiai2(map<string, long> &m1, map<string, long> &m2, int num){
-	return 0.0;
+	
 }
