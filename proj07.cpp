@@ -81,14 +81,9 @@ string vector_to_string(vector<pair<string,long>> &v){
 void process_line(map<string, long>& m, string line, size_t n){
 	line = clean_string(line); //strips the line
 	vector<string> vec = generate_ngrams(line, n); //Generates a vector of the n_grams
+    //Count how many occurances of each element there are
     for(string s : vec){
-		//Count how many occurances of each element there are
-        if(m.find(s) != m.end()){ //Use m[s] += 1?
-            m.at(s) += 1;
-        }
-        else{
-            m.insert(std::pair<string,long>(s,1));
-        }
+    	m[s] += 1;
     }
 }
 
@@ -133,5 +128,5 @@ double ochiai(map<string, long> &m1, map<string, long> &m2){
 }
 
 double ochiai2(map<string, long> &m1, map<string, long> &m2, int num){
-	
+	return 0.0;
 }
