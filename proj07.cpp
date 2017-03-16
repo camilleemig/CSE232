@@ -114,17 +114,18 @@ vector<pair<string, long>> top_n(map<string, long> &m, int num){
 }
 
 double ochiai(map<string, long> &m1, map<string, long> &m2){
-	vector<pair<string, long> > vR;
-	vector<pair<string, long> > v1;
-	vector<pair<string, long> > v2;
-	vector<pair<string, long> >::iterator it;
+	vector<pair<string, long> > vR; //Set intersection vector
+	vector<pair<string, long> > v1; //m1 vector
+	vector<pair<string, long> > v2; //m2 vector
 	
 	copy(m1.begin(), m1.end(), back_inserter(v1)); //Copy each element in the map to the vector
-    	sort(v1.begin(), v1.end(), pair_string_lessthan); //Sort the vector
-    	copy(m2.begin(), m2.end(), back_inserter(v2)); //Copy each element in the map to the vector
-    	sort(v2.begin(), v2.end(), pair_string_lessthan); //Sort the vector
+    sort(v1.begin(), v1.end(), pair_string_lessthan); //Sort the vector
+    copy(m2.begin(), m2.end(), back_inserter(v2)); //Copy each element in the map to the vector
+    sort(v2.begin(), v2.end(), pair_string_lessthan); //Sort the vector
     
+	//Create set intersection
 	set_intersection(v1.begin(), v1.end(),v2.begin(), v2.end(), back_inserter(vR), pair_string_lessthan);
+	//Store sizes for neatness
 	double intersection_num = vR.size();
 	double map1_size = v1.size();
 	double map2_size = v2.size();
