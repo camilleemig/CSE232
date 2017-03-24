@@ -10,8 +10,7 @@ using std::ifstream;
 using std::map;
 #include<sstream>
 using std::istringstream; using std::ostringstream;
-#include<math.h>
-//using std::sqrt; using std::pow;
+#include<cmath>
 #include<algorithm>
 using std::find; using std::copy;
 #include <iterator>
@@ -22,25 +21,28 @@ using std::cout;
 //NODE FUNCTIONS
 string Node::to_string () const {
     ostringstream oss;
+    //Label:(X,Y)
     oss << label << ":(" << x << "," << y << ")";
     return oss.str();
 }
+
 bool Node::equal_nodes(const Node & other){
+    //Can assume that the nodes are equal if the labels are the same
     return label == other.label;
 }
 
 double Node::distance(const Node & other) const{
+    //Distance is the square root of the coordinates subtracted and squared
     return sqrt(pow(x-other.x, 2) + pow(y - other.y, 2));
 }
 
-
+//NETWORK FUNCTIONS
 Network::Network(ifstream &file){
-    string line;
-    long firstlong;
-    long secondlong;
+    long firstlong, secondlong;
     string label;
-    while(file >> firstlong){
-        file >> secondlong >> label;
+    //Gets the values from each line
+    while(file >> firstlong >> secondlong >> label){
+        //Adds the node
         put_node(Node(firstlong, secondlong, label));
     }
 }
@@ -48,13 +50,16 @@ Network::Network(ifstream &file){
 string Network::to_string() const{
     ostringstream oss;
     string s;
+    //Label, Label, Label, Label
     for(pair<string, Node> p : nodes){
         oss << p.second.to_string() << ", ";
     }
     s = oss.str();
+    //Remove last comma and space
     s = s.substr(0, s.size() - 2);
     return s;
 }
+
 Node Network::get_node(string s){
     auto it = nodes.find(s);
     if(it == nodes.end()){
@@ -64,15 +69,18 @@ Node Network::get_node(string s){
     pair<string, Node> p = *it;
     return p.second;
 }
+
 void Network::put_node(Node new_node){
     nodes[new_node.label] = new_node;
 }
+
 bool Network::in_route(const Node& n){
     if(find(route.begin(), route.end(), n.label) == route.end()){
         return false;
     }
     return true;
 }
+
 Node Network::closest(Node & n){
     double shortest_distance = 100000000000.0;
     Node closest;
@@ -87,6 +95,7 @@ Node Network::closest(Node & n){
     }
     return closest;
 }
+
 string Network::calculate_route(const Node& start, const Node& end){
     ostringstream oss;
     string s;
