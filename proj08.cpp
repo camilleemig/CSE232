@@ -100,12 +100,10 @@ string Network::calculate_route(const Node& start, const Node& end){
     ostringstream oss;
     string s;
     double total_distance = 0.0;
+    Node last_node;
     //Set the first node
-    Node last_node = start;
     route.push_back(start.label); //Add the first node to the route
-    Node next_closest = closest(last_node); //Find the next node
-    total_distance += last_node.distance(next_closest);
-    route.push_back(next_closest.label); //Add that to the route
+    Node next_closest = start; //Find the next node
     while(! next_closest.equal_nodes(end)){
         //Store the last node
         last_node = next_closest;
