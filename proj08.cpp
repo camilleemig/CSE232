@@ -1,3 +1,9 @@
+/*************************************
+ * Project 7=8
+ * Camille Emig
+ * Section 003
+ * 03-24-2017
+ **************************************/
 #include<vector>
 using std::vector;
 #include<utility>
@@ -61,32 +67,42 @@ string Network::to_string() const{
 }
 
 Node Network::get_node(string s){
+    //Search for the string
     auto it = nodes.find(s);
+    //If the string was not in nodes, throw an error
     if(it == nodes.end()){
         string error_str = "Node not found:"+s;
         throw std::out_of_range(error_str);
     }
+    //Return the found node
     pair<string, Node> p = *it;
     return p.second;
 }
 
 void Network::put_node(Node new_node){
+    //Add a new node to the list of nodes
     nodes[new_node.label] = new_node;
 }
 
 bool Network::in_route(const Node& n){
+    //Check to see if the node is not in the route
     if(find(route.begin(), route.end(), n.label) == route.end()){
         return false;
     }
+    //Return true if it is in the route
     return true;
 }
 
 Node Network::closest(Node & n){
     double shortest_distance = 100000000000.0;
     Node closest;
+    //Loop through each pair
     for(pair<string, Node> p : nodes){
+        //Find the node in the route
         auto it = find(route.begin(), route.end(), p.second.label);
+        //If the nodes are not the same, and the node is not in the route
         if(! p.second.equal_nodes(n) && (it == route.end())){
+            //Check to see if it is the closest
             if(n.distance(p.second) < shortest_distance){
                 shortest_distance = n.distance(p.second);
                 closest = p.second;
