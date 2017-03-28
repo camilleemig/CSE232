@@ -1,3 +1,9 @@
+/**************
+* Camille Emig
+* CSE232 Honors Option
+* Elevator Simulator
+***************/
+
 #include<iostream>
 using std::cout; using std::endl; using std::cin;
 #include<deque>
@@ -19,19 +25,23 @@ using std::setw; using std::setfill;
 #include "random_support.h"
 
 void get_new_passengers(deque<deque<long>> &available_passengers, deque<deque<long>> &all_passengers, double &current_time){
+    //Loop through each passenger in the load
     for(deque<long> passenger : all_passengers){
+        //Check to see if the passenger has become available (by time)
         if(passenger[0] <= current_time){
+            //Add the passenger to the available passengers
             available_passengers.push_back(passenger);
-            all_passengers.pop_front();
+            all_passengers.pop_front(); //Remove this passenger
         }
         else{
+            //Can break because passengers are sorted by time
             break;
         }
     }
 }
 
 long decide_floor_strategy(deque<deque<long>> &current_passengers, deque<deque<long>> &available_passengers, long current_floor, ofstream &myfile){
-    long next_floor = 1;
+    long next_floor = 1; //This doesn't seem right
     
     //This is to decide by current passengers
     long floor_difference = 1000000000000000;
@@ -46,14 +56,19 @@ long decide_floor_strategy(deque<deque<long>> &current_passengers, deque<deque<l
         myfile << "Moving to closest destination floor for current passengers." << endl;
     }
     for(deque<long> passenger : current_passengers){
+        //This statement ensures a positive value
         if(current_floor > passenger[1]){
+            //Checks to see if this floor is closest
             if((current_floor-passenger[1]) < floor_difference){
+                //Stores as the closest
                 floor_difference = current_floor - passenger[1];
                 next_floor = passenger[1];
             }
         }
         else{
+            //Checks to see if this floor is closest
             if((passenger[1]-current_floor) < floor_difference){
+                //Stores as the closest
                 floor_difference = passenger[1] - current_floor;
                 next_floor = passenger[1];
             }
@@ -63,24 +78,24 @@ long decide_floor_strategy(deque<deque<long>> &current_passengers, deque<deque<l
     //Decide by getting new passengers
     if(floor_difference == 1000000000000000){
         myfile << "Moving to floor with most passengers waiting." << endl;
+        //By most passgengers waiting
         for(deque<long> passenger : available_passengers){
-            //By most passgengers waiting,
-            if(floors.find(passenger[2]) != floors.end()){
-                floors.at(passenger[2]) += 1;
-            }
-            else{
-                floors.insert(std::pair<long,long>(passenger[2],1));
-            }
+            //Stores the number of passengers on a floor
+            floors[2] += 1;
         }
+        //Loops through to find the floor with the most passengers
         for(auto elem : floors)
         {
+            //Stores the values of the floor with the most people
             if(elem.second > max_passengers){
                 next_floor = elem.first;
                 max_passengers = elem.second;
             }
             else if(elem.second == max_passengers){
+                //Gets the difference between the floors
                 old_floor_difference = (current_floor > next_floor) ? current_floor - next_floor: next_floor - current_floor;
                 new_floor_difference = (current_floor > elem.first) ? current_floor - elem.first: elem.first - current_floor;
+                //Checks to see which is closest
                 if(new_floor_difference <= old_floor_difference){
                     next_floor = elem.first;
                 }
@@ -94,10 +109,12 @@ long decide_floor_strategy(deque<deque<long>> &current_passengers, deque<deque<l
 }
 
 long decide_floor_random(deque<deque<long>> &current_passengers, deque<deque<long>> &available_passengers, mt19937_64 &reng){
-    long next_floor = 1;
+    long next_floor = 1; //This doesn't seem right.
+    //Decides the floor by passengers on the elevator
     if(current_passengers.size() != 0){
         next_floor = current_passengers.at(random_long_in_range(0,current_passengers.size()-1,reng))[1];
     }
+    //Decides floor by available passengers if there are no passengers on the elevator
     else if(available_passengers.size() != 0){
         next_floor = available_passengers.at(random_long_in_range(0, available_passengers.size()-1,reng))[2];
     }
@@ -108,24 +125,31 @@ long decide_floor_random(deque<deque<long>> &current_passengers, deque<deque<lon
 
 
 void move_floor(long &current_floor, long next_floor, double elevator_rate, double &time){
+    //Figures out how far the robot moves
     long floor_difference = next_floor - current_floor;
+    //Makes the difference positive
     floor_difference = (floor_difference > 0) ? floor_difference: (-1*floor_difference);
+    //Increments the time
     time += floor_difference*elevator_rate;
+    //Updates the floor
     current_floor = next_floor;
 }
 
 void unload_passengers(deque<deque<long>> &current_passengers, long current_floor, double passenger_rate, double &time, ofstream &myfile){
     deque<deque<long>> new_current_passengers;
     deque<deque<long>> unloaded_passengers;
+    
     for(deque<long> passenger : current_passengers){
+        //Checks each passenger to see if they need to be unloaded
         if(current_floor != passenger[1]){
-            new_current_passengers.push_back(passenger);
+            new_current_passengers.push_back(passenger); //Stores the passengers who are not unloaded
         }
         else{
-            unloaded_passengers.push_back(passenger);
-            time += passenger_rate;
+            unloaded_passengers.push_back(passenger); //Stores the passengers who are loaded
+            time += passenger_rate; //Adds time for each unloaded person
         }
     }
+    //Prints out the details of the people who were unloaded
     if(unloaded_passengers.size() != 0){
         myfile << "Unloaded passengers" << endl << print_2d_deque(unloaded_passengers) << endl;
     }
