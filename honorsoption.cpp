@@ -41,7 +41,7 @@ void get_new_passengers(deque<deque<long>> &available_passengers, deque<deque<lo
 }
 
 long decide_floor_strategy(deque<deque<long>> &current_passengers, deque<deque<long>> &available_passengers, long current_floor, ofstream &myfile){
-    long next_floor = 1; //This doesn't seem right
+    long next_floor = current_floor; 
     
     //This is to decide by current passengers
     long floor_difference = 1000000000000000;
@@ -108,8 +108,8 @@ long decide_floor_strategy(deque<deque<long>> &current_passengers, deque<deque<l
     return next_floor;
 }
 
-long decide_floor_random(deque<deque<long>> &current_passengers, deque<deque<long>> &available_passengers, mt19937_64 &reng){
-    long next_floor = 1; //This doesn't seem right.
+long decide_floor_random(deque<deque<long>> &current_passengers, deque<deque<long>> &available_passengers, mt19937_64 &reng, long current_floor){
+    long next_floor = current_floor; 
     //Decides the floor by passengers on the elevator
     if(current_passengers.size() != 0){
         next_floor = current_passengers.at(random_long_in_range(0,current_passengers.size()-1,reng))[1];
@@ -238,7 +238,7 @@ void single_run(long floor_max, double passenger_rate, double elevator_rate, mt1
                 next_floor = decide_floor_strategy(current_passengers, available_passengers, current_floor, myfile);
             }
             else if (turn == "random"){
-                next_floor = decide_floor_random(current_passengers, available_passengers, reng);
+                next_floor = decide_floor_random(current_passengers, available_passengers, reng, current_floor);
 
             }
             if(next_floor != current_floor){
@@ -292,7 +292,7 @@ void multiple_run(long floor_max, double passenger_rate, double elevator_rate, m
                 next_floor = decide_floor_strategy(current_passengers, available_passengers, current_floor, myfile);
             }
             else if (turn == "random"){
-                next_floor = decide_floor_random(current_passengers, available_passengers, reng);
+                next_floor = decide_floor_random(current_passengers, available_passengers, reng, current_floor);
                 
             }
             if(next_floor != current_floor){
