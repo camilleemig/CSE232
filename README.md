@@ -1,7 +1,7 @@
 # CSE232
-## [First Honors Option](/Honors Option-1)
+## [First Honors Option](/'Honors Option-1')
 Elevator simulator that runs a simple strategy versus a random strategy to compare statistics of how the elevator performed.
-## [Second Honors Option](/Honors Option-2)
+## [Second Honors Option](/'Honors Option-2')
 Elevator simulator that runs a smart strategy versus a simple strategy to compare statistics of how the elevator performed.
 ## [Project 1](/Project1)
 Calculates the pounds of greenhouse gas per year, change in pounds of emmissions if the mileage went up by 1pmg, and the change in pounds of emissions if the mileage went up by 5mpg based on the mpg of a car and the miles driven per year as inputs.
