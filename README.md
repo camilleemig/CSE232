@@ -1,11 +1,11 @@
 # CSE232
 ## [Project 1](/Project1)
-## Project 2
-## Project 3
-## Project 4
-## Project 5
-## Project 6
-## Project 7
-## Project 8
-## Project 9
-## Project 10
+## [Project 2](/Project2)
+## [Project 3](/Project3)
+## [Project 4](/Project4)
+## [Project 5](/Project5)
+## [Project 6](/Project6)
+## [Project 7](/Project7)
+## [Project 8](/Project8)
+## [Project 9](/Project9)
+## [Project 10](/Project10)
