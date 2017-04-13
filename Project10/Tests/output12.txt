@@ -1,0 +1,6 @@
+Top1 index:1
+Top2 index:2
+Size:4
+Capacity:4
+a,b,z,y
+stack past max

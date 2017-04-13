@@ -1,0 +1,5 @@
+Top1 index:6
+Top2 index:11
+Size:8
+Capacity:12
+1,2,3,4,5,6,100,0,0,0,0,200

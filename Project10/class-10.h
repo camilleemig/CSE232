@@ -119,7 +119,7 @@ template <typename ElementType>
 BiStack<ElementType>& BiStack<ElementType>::operator=(BiStack<ElementType> s){
     //Assignment operator
     swap(this->sz_, s.sz_);
-    swap(this->max_sz_, s.sz_);
+    swap(this->max_sz_, s.max_sz_);
     
     swap(this->top1_, s.top1_);
     swap(this->top2_, s.top2_);

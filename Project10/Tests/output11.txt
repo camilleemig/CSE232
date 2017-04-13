@@ -1,0 +1,10 @@
+Top1 index:1
+Top2 index:2
+Size:4
+Capacity:4
+a,b,z,y
+Top1 index:6
+Top2 index:14
+Size:9
+Capacity:16
+a,b,h,i,j,k,l,,,,,,,,z,y

@@ -1,0 +1,11 @@
+10:false
+15:true
+25:false
+26:true
+39:true
+40:false
+111:false
+394:true
+398:true
+511:true
+6000:false
