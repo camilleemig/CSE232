@@ -1,0 +1,2 @@
+triangle:red, circle:green, square:blue
+triangle:red, square:blue, circle:green
