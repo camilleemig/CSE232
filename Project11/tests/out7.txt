@@ -1,0 +1,3 @@
+triangle:16711680, circle:65280, square:255
+diamond:16776960, triangle:16711680, circle:65280, square:255
+oval:16711935, triangle:16711680, circle:65280, square:255

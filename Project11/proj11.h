@@ -91,21 +91,37 @@ void PAL<T>::print_list(ostream& out){
 
 template<typename T>
 PAL<T>::PAL(const PAL& p){
-    if (p.front_ == nullptr){
+/*if (p.front_ == nullptr){
         front_ = nullptr;
         back_ = nullptr;
     }
     else{
-        Element<T> *current;
+        Element<T> *last;
         for(Element<T> *ptr = p.back_; ptr != nullptr; ptr = ptr->next_){
-            cout << *ptr << endl;
             if(ptr == p.back_){
-                back_ = ptr;
+                back_ = new Element<T>(*ptr);
             }
             else{
-                current->next_ = new Element<T>(ptr->name_, ptr->color_);
+                last->next_ = new Element<T>(ptr->name_, ptr->color_);
             }
-            current = current->next_;
+            last = last->next_;
+        }
+        front_ = last;
+    }*/
+    if (p.back_ == nullptr){
+        back_ = nullptr;
+        front_ = nullptr;
+    }
+    else{
+        back_ = new Element<T>(*(p.back_));
+        front_ = back_;
+        Element<T>* p_ptr = p.back_->next_;
+        Element<T>* new_node;
+        while (p_ptr != nullptr){
+            new_node = new Element<T>(*p_ptr);
+            front_->next_ = new_node;
+            p_ptr = p_ptr->next_;
+            front_ = new_node;
         }
     }
 }
