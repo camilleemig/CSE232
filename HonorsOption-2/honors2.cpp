@@ -340,10 +340,10 @@ void unload_passengers_multiple(deque<deque<long>> &current_passengers, long cur
 }
 
 void load_passengers(deque<deque<long>> &current_passengers,deque<deque<long>> &available_passengers, long current_floor, double passenger_rate, double &time){
-    if(current_passengers.size() < 10){
-        deque<deque<long>> new_available_passengers;
-        //Loops through all available passengers
-        for(deque<long> passenger : available_passengers){
+    deque<deque<long>> new_available_passengers;
+    //Loops through all available passengers
+    for(deque<long> passenger : available_passengers){
+        if(current_passengers.size() < 10){
             //If the passenger should get on, add them to the current passengers
             if(current_floor == passenger[1]){
                 current_passengers.push_back(passenger);
@@ -354,8 +354,9 @@ void load_passengers(deque<deque<long>> &current_passengers,deque<deque<long>> &
                 new_available_passengers.push_back(passenger);
             }
         }
-        available_passengers = new_available_passengers; //Updates the available passengers
     }
+    available_passengers = new_available_passengers; //Updates the available passengers
+    
 }
 
 void single_run(long floor_max, double passenger_rate, double elevator_rate, mt19937_64 &reng, long passenger_max, string turn, deque<deque<long>> all_passengers, ofstream &myfile){
@@ -548,7 +549,6 @@ int main (){
         else{
             optimal_win += 1;
         }
-        cout << cnt << endl;
         ++cnt;
     }
     myfile << "MULTIPLE RUN STATISTICS" << endl;
