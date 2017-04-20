@@ -68,7 +68,6 @@ template<typename T>
 PAL<T>::PAL(string n, T d){
     //Constuctor code from example 18.2
     //Only variable names have been changed
-    
     Element<T> *ptr = new Element<T>(n,d);
     back_ = ptr;
     front_ = ptr;
@@ -91,23 +90,6 @@ void PAL<T>::print_list(ostream& out){
 
 template<typename T>
 PAL<T>::PAL(const PAL& p){
-/*if (p.front_ == nullptr){
-        front_ = nullptr;
-        back_ = nullptr;
-    }
-    else{
-        Element<T> *last;
-        for(Element<T> *ptr = p.back_; ptr != nullptr; ptr = ptr->next_){
-            if(ptr == p.back_){
-                back_ = new Element<T>(*ptr);
-            }
-            else{
-                last->next_ = new Element<T>(ptr->name_, ptr->color_);
-            }
-            last = last->next_;
-        }
-        front_ = last;
-    }*/
     if (p.back_ == nullptr){
         back_ = nullptr;
         front_ = nullptr;
