@@ -26,19 +26,19 @@ class PAL;
 template <typename T>
 class Element{
 private:
-  Element *next_ = nullptr;
-  string name_ = "";
-  T color_ = T();
-  
-public:
-  Element()=default;
-  Element(string name, T d) : next_(nullptr), name_(name), color_(d){};
-  friend ostream& operator<<(ostream& out, Element& n){
-      out << n.name_ << ":" << n.color_;
-      return out;
+    Element *next_ = nullptr;
+    string name_ = "";
+    T color_ = T();
     
-  }
-  friend class PAL<T>;
+public:
+    Element()=default;
+    Element(string name, T d) : next_(nullptr), name_(name), color_(d){};
+    friend ostream& operator<<(ostream& out, Element& n){
+        out << n.name_ << ":" << n.color_;
+        return out;
+        
+    }
+    friend class PAL<T>;
 };
 
 //PAL class code taken from Punch's SingleLink class 18.2
@@ -46,29 +46,29 @@ public:
 template <typename T>
 class PAL{
 private:
-  Element<T> *back_ = nullptr;
-  Element<T> *front_ = nullptr;
-  void print_list(ostream& out);  
+    Element<T> *back_ = nullptr;
+    Element<T> *front_ = nullptr;
+    void print_list(ostream& out);
 public:
-  PAL()=default;
-  PAL(Element<T> n) : back_(&n), front_(&n) {};
-  PAL(string n, T d);
-  PAL(const PAL&);
-  PAL& operator=(PAL);
-  ~PAL();
-  void add(Element<T> &n);
-  void add(string name, T dat);
-  pair<Element<T>*, Element<T>*> find(string name);    
-  pair<Element<T>*, Element<T>*> find(Element<T> &n);
-  void move_forward1(Element<T> &n);
-  void move_to_front(Element<T> &n);  
-  void move_back1(Element<T> &n);
-  void move_to_back(Element<T> &n);  
-
-  friend ostream& operator<<(ostream& out, PAL<T>& p){
-    p.print_list(out);
-    return out;
-  };
+    PAL()=default;
+    PAL(Element<T> n) : back_(&n), front_(&n) {};
+    PAL(string n, T d);
+    PAL(const PAL&);
+    PAL& operator=(PAL);
+    ~PAL();
+    void add(Element<T> &n);
+    void add(string name, T dat);
+    pair<Element<T>*, Element<T>*> find(string name);
+    pair<Element<T>*, Element<T>*> find(Element<T> &n);
+    void move_forward1(Element<T> &n);
+    void move_to_front(Element<T> &n);
+    void move_back1(Element<T> &n);
+    void move_to_back(Element<T> &n);
+    
+    friend ostream& operator<<(ostream& out, PAL<T>& p){
+        p.print_list(out);
+        return out;
+    };
 };
 
 template<typename T>
@@ -266,16 +266,17 @@ void PAL<T>::move_back1(Element<T> &n){
 
 template<typename T>
 void PAL<T>::move_to_back(Element<T> &n){
+    //Stores previous and current
     auto pr = this->find(n);
     auto previous = pr.second;
     auto current = pr.first;
+    //If there is a previous and current
     if(previous != nullptr && current != nullptr){
-        auto move_forward = back_;
-        back_ = current;
-        
-        previous->next_ = current->next_;
-        current->next_ = move_forward;
-        if(current == front_){
+        auto move_forward = back_; //Store the back
+        back_ = current; //Set the back to the current
+        previous->next_ = current->next_; //Point the last one to the one after
+        current->next_ = move_forward; //Point the current to the old back
+        if(current == front_){ //Set the front if necessary
             front_ = previous;
         }
     }

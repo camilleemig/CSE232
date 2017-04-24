@@ -72,7 +72,7 @@ int main (){
     auto pr = p.find("circle");
     // cout << *(pr.first) <<" : "<< *(pr.second) << endl;    
     cout << p << endl;
-    p.move_to_front(*(pr.first));
+    p.move_to_front(*(pr.first) );
     cout << p << endl;
     break;
   }
@@ -91,18 +91,6 @@ int main (){
     cout << p_equal << endl;
     break;
   }
-          
-  case 8:{
-      PAL<long> p("square", 0x0000FF);
-      p.add("circle", 0x00FF00);
-      p.add("triangle", 0xFF0000);
-      p.add("diamond",0xFFFF00);
-      cout << p << endl;
-      auto pr = p.find("triangle");
-      p.move_back1(*(pr.first));
-      cout << p << endl;
-
-      break;
-  }
+    
   }
 }
