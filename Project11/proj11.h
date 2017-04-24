@@ -1,3 +1,9 @@
+/**************
+ *  Camille Emig
+ *  CSE232 Project 11
+ *  Single Linked List
+ *  Code basis from Dr. Punch's 18.2 Example
+ *************/
 #ifndef PAL_H
 #define PAL_H
 
@@ -9,14 +15,14 @@ using std::swap;
 using std::ostringstream;
 #include<string>
 using std::string;
-//#include<utility>
 using std::pair;
 
-// forward declaration so we can make Element a friend of PAL
 template<typename T>
 class PAL;
 
-//Element class
+
+//Element class code taken from Punch's Node class 18.2
+//Only variable names have been changed.
 template <typename T>
 class Element{
 private:
@@ -35,8 +41,9 @@ public:
   friend class PAL<T>;
 };
 
-
-template<typename T>
+//PAL class code taken from Punch's SingleLink class 18.2
+//Only variable names have been changed.
+template <typename T>
 class PAL{
 private:
   Element<T> *back_ = nullptr;
@@ -68,6 +75,7 @@ template<typename T>
 PAL<T>::PAL(string n, T d){
     //Constuctor code from example 18.2
     //Only variable names have been changed
+    //Makes a new element, sets front and back to that element
     Element<T> *ptr = new Element<T>(n,d);
     back_ = ptr;
     front_ = ptr;
@@ -80,30 +88,33 @@ void PAL<T>::print_list(ostream& out){
     //Only variable names have been changed
     ostringstream oss;
     Element<T> *ptr;
-    for(ptr = back_; ptr != nullptr; ptr = ptr->next_)
-        oss << *ptr << ", ";
+    for(ptr = back_; ptr != nullptr; ptr = ptr->next_) //Walks from back to front
+        oss << *ptr << ", "; //Prints each element
     string s = oss.str();
-    out << s.substr(0,s.size()-2);
+    out << s.substr(0,s.size()-2); //Returns the string without last ', '
 }
 
 
 
 template<typename T>
 PAL<T>::PAL(const PAL& p){
+    //Constuctor code from example 18.2
+    //Only variable names have been changed
+    //Handles if it's empty
     if (p.back_ == nullptr){
         back_ = nullptr;
         front_ = nullptr;
     }
     else{
-        back_ = new Element<T>(*(p.back_));
-        front_ = back_;
-        Element<T>* p_ptr = p.back_->next_;
-        Element<T>* new_node;
+        back_ = new Element<T>(*(p.back_)); //Copies the back
+        front_ = back_; //Sets front to back
+        Element<T>* p_ptr = p.back_->next_; //goes to the next element
+        Element<T>* new_node; //New node template
         while (p_ptr != nullptr){
-            new_node = new Element<T>(*p_ptr);
-            front_->next_ = new_node;
-            p_ptr = p_ptr->next_;
-            front_ = new_node;
+            new_node = new Element<T>(*p_ptr); //Makes a new node
+            front_->next_ = new_node; //Sets the next
+            p_ptr = p_ptr->next_; //Moves the pointer up one
+            front_ = new_node; //Updates the front
         }
     }
 }
@@ -121,25 +132,27 @@ template<typename T>
 PAL<T>::~PAL(){
     //Destructor code from example 18.2
     //Only variable names have been changed
-    Element<T>* to_del = back_;
+    Element<T>* to_del = back_; //Sets the first element to delete
     while (to_del != nullptr){
-        back_ = back_->next_;
-        delete to_del;
-        to_del = back_;
+        back_ = back_->next_; //Walks down the list of elements
+        delete to_del; //Deletes the element
+        to_del = back_; //Sets the next element to delete
     }
+    //Updates the pointers
     front_ = nullptr;
     back_ = nullptr;
 }
 
 template<typename T>
 void PAL<T>::add(Element<T> &n){
-    //Add back code from example 18.2
+    //Add back code from example 18.2 append_front
     //Only variable names have been changed
-    if (back_ != nullptr){
-        n.next_ = back_;
-        back_ = &n;
+    if (back_ != nullptr){ //If there is an element
+        n.next_ = back_; //point this to the current back
+        back_ = &n; //Set the back to this
     }
     else {
+        //Update front and back to be the new element
         front_=&n;
         back_=&n;
     }
@@ -147,7 +160,7 @@ void PAL<T>::add(Element<T> &n){
 
 template<typename T>
 void PAL<T>::add(string name, T dat){
-    //Add back code from example 18.2
+    //Add front code from example 18.2
     //Only variable names have been changed, element constructor changed to match.
     Element<T>* n = new Element<T>(name,dat);
     add(*n);
@@ -159,12 +172,14 @@ pair<Element<T>*, Element<T>*> PAL<T>::find(string name){
     //Variable names have been changed, second pointer code added
     Element<T> *previous_element = nullptr;
     Element<T> *element = nullptr;
+    //Walks through the elements
     for(Element<T> *Element = back_; Element != nullptr; Element = Element->next_){
+        //Checks the element to see if it is the same
         if (Element != nullptr && Element->name_ == name){
-            element = Element;
-            break;
+            element = Element; //Keeps track of the current element
+            break; //Stops the loop
         } // of if
-        previous_element = Element;
+        previous_element = Element; //Keeps track of the last element
     } // of for
     auto return_pair = make_pair(element, previous_element);
     return return_pair;
@@ -172,31 +187,30 @@ pair<Element<T>*, Element<T>*> PAL<T>::find(string name){
 
 template<typename T>
 pair<Element<T>*, Element<T>*> PAL<T>::find(Element<T> &n){
-    
-    return this->find(n.name_);
+    return this->find(n.name_); //Finds the element by name
 }
 
 template<typename T>
 void PAL<T>::move_forward1(Element<T> &n){
     auto pr = this->find(n);
-    auto previous = pr.second;
-    auto current = pr.first;
+    auto previous = pr.second; //Keeps track of the last one
+    auto current = pr.first; //Keeps track of the current one
     if(current!= nullptr && current->next_ != nullptr){
-        if(previous != nullptr){
-            auto move_back = current->next_;
-            current->next_ = move_back->next_;
-            move_back->next_ = current;
-            previous->next_ = move_back;
+        if(previous != nullptr){ //If there was one before it
+            auto move_back = current->next_; //Keeps track of the one ahead of it
+            current->next_ = move_back->next_; //Points the current to the one it needs to point to
+            move_back->next_ = current; //Points the one ahead to current
+            previous->next_ = move_back; //Points previous to the one ahead
             if (current->next_ == nullptr){
-                front_ = current;
+                front_ = current; //Updates front if necessary
             }
         }
         else if(previous == nullptr){
-            auto move_back = current->next_;
-            current->next_ = move_back->next_;
-            move_back->next_ = current;
-            back_ = move_back;
-            if (current->next_ == nullptr){
+            auto move_back = current->next_; //Keeps track of the one ahead
+            current->next_ = move_back->next_; //Points the current to the one two ahead
+            move_back->next_ = current; //Points the one ahead to current
+            back_ = move_back; //Points the back to the one ahead
+            if (current->next_ == nullptr){ //UPdates front if necessary
                 front_ = current;
             }
         }
@@ -206,41 +220,43 @@ void PAL<T>::move_forward1(Element<T> &n){
 template<typename T>
 void PAL<T>::move_to_front(Element<T> &n){
     auto pr = this->find(n);
-    auto previous = pr.second;
-    auto current = pr.first;
-    if(current->next_ != nullptr){
-        if(current!= nullptr && previous != nullptr){
-            previous->next_ = current->next_;
-            front_->next_ = current;
-            front_ = current;
+    auto previous = pr.second; //Keeps track of the last one
+    auto current = pr.first; //Keeps track of the current one
+    if(current != nullptr && current->next_ != nullptr){ //If it's not already at the front
+        if(previous != nullptr){ //If there was one before it
+            previous->next_ = current->next_; //Point the last one to the next one
+            front_->next_ = current; //Point the front to current
+            front_ = current; //Update front
             current->next_ = nullptr;
         }
-        else if(current!= nullptr && previous == nullptr){
-            back_ = current->next_;
-            front_->next_ = current;
-            front_ = current;
-            current->next_ = nullptr;
+        else if(previous == nullptr){ //If it's at the back
+            back_ = current->next_; //update the back
+            front_->next_ = current; //Point the current front to this
+            front_ = current; //Update the front
+            current->next_ = nullptr; //Update the next of current
         }
     }
 }
 
 template<typename T>
 void PAL<T>::move_back1(Element<T> &n){
+    //Stores previous and current
     auto pr = this->find(n);
     auto previous = pr.second;
     auto current = pr.first;
+    //If there is a previous and current
     if(previous != nullptr && current != nullptr){
-        if(previous == back_){
-            previous->next_ = current->next_;
-            current->next_ = previous;
-            back_ = current;
+        if(previous == back_){ //If the previous is at the back
+            previous->next_ = current->next_; //Point the previous to the next
+            current->next_ = previous; //Point the current to the previous
+            back_ = current; //Update current
         }
         else{
-            auto pr_pr = this->find(*previous);
-            auto previous_previous = pr_pr.second;
-            previous_previous->next_ = current;
-            current->next_ = previous;
-            previous->next_ = nullptr;
+            auto pr_pr = this->find(*previous); //Finds the previous of the previous
+            auto previous_previous = pr_pr.second; //Stores the previous of the previous
+            previous_previous->next_ = current; //Points the previous of the previous to the current
+            current->next_ = previous;  //Points the current to the previous
+            previous->next_ = nullptr; //Points the previous to the front
         }
         if(current == front_){
             front_ = previous;
